@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>leaflet-map-csv</title>
+  <title>project by joe stasik</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="utf-8">
 
@@ -69,7 +69,7 @@
 
       var marker = L.marker([row.Latitude, row.Longitude], {
         opacity: 1
-      }).bindPopup(row.Title, row.Franchisee, row.Phone, row.ETA, row.Updated);
+      }).bindPopup([row.Title, row.Franchisee, row.Phone, row.ETA, row.Updated]);
       
       marker.addTo(map);
     }
