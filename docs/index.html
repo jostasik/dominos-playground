@@ -68,11 +68,10 @@
       var row = data[i];
 
       // Create a string with the contents of the pop-up window
-      var popupContent = '<b>' + row.Title + '</b><br>' +
-                         'ETA: ' + row.ETA + '<br>' +
-                         'Updated: ' + row.Updated + '<br>' +
+      var popupContent = '<b> Store # ' + row.Title + '</b><br>' +
+                         'Wait time: ' + row.ETA + 'mins. (as of '+ row.Updated +')<br>' +
                          'Franchisee: ' + row.Franchisee + '<br>' +
-                         'Phone: ' + row.Phone;
+                         'Store Phone: ' + row.Phone;
 
       // Create a marker and bind the pop-up window to it
       var marker = L.marker([row.Latitude, row.Longitude], {
