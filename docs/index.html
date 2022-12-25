@@ -31,7 +31,7 @@
   // Set up initial map center and zoom level
   var map = L.map('map', {
     center: [40.4140,-74.3520], // EDIT latitude, longitude to re-center map
-    zoom: 10,  // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
+    zoom: 9.5,  // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
     scrollWheelZoom: false,
     tap: false
   });
@@ -62,21 +62,26 @@
     // Use PapaParse to convert string to array of objects
     var data = Papa.parse(csvString, {header: true, dynamicTyping: true}).data;
 
+    var markerIcon = L.icon({
+      iconUrl: 'marker.svg',
+      iconSize: [32, 32],  // size of the icon
+      iconAnchor: [16, 32] // point of the icon which will correspond to marker's location
+    });
+
+
     // For each row in data, create a marker and add it to the map
     // For each row, columns `Latitude`, `Longitude`, and `Title` are required
     for (var i in data) {
       var row = data[i];
 
       // Create a string with the contents of the pop-up window
-      var popupContent = '<b> Store # ' + row.Title + '</b><br>' +
-                         'Wait time: ' + row.ETA + 'mins. (as of '+ row.Updated +')<br>' +
+      var popupContent = '<b> Dominos Store: ' + row.Title + '</b><br>' +
+                         'Wait Time: ' + row.ETA + ' mins<br>' +
                          'Franchisee: ' + row.Franchisee + '<br>' +
                          'Store Phone: ' + row.Phone;
 
       // Create a marker and bind the pop-up window to it
-      var marker = L.marker([row.Latitude, row.Longitude], {
-        opacity: 1
-      }).bindPopup(popupContent);
+      var marker = L.marker([row.Latitude, row.Longitude], {opacity: 1, icon: markerIcon}).bindPopup(popupContent);
 
       marker.addTo(map);
     }
