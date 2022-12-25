@@ -60,17 +60,21 @@
   $.get('./data_nj.csv', function(csvString) {
 
     // Use PapaParse to convert string to array of objects
-    var data = Papa.parse(csvString, {header: true, dynamicTyping: true}).data;
-
-    // For each row in data, create a marker and add it to the map
-    // For each row, columns `Latitude`, `Longitude`, and `Title` are required
     for (var i in data) {
       var row = data[i];
 
+      // Create a string with the contents of the pop-up window
+      var popupContent = '<b>' + row.Title + '</b><br>' +
+                         'ETA: ' + row.ETA + '<br>' +
+                         'Updated: ' + row.Updated + '<br>' +
+                         'Franchisee: ' + row.Franchisee + '<br>' +
+                         'Phone: ' + row.Phone;
+
+      // Create a marker and bind the pop-up window to it
       var marker = L.marker([row.Latitude, row.Longitude], {
         opacity: 1
-      }).bindPopup(row.Title).bindPopup(row.ETA).bindPopup(row.Updated).bindPopup(row.Franchisee).bindPopup(row.Phone);
-      
+      }).bindPopup(popupContent);
+
       marker.addTo(map);
     }
 
