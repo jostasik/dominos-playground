@@ -57,7 +57,7 @@
   // see more basemap options at https://leaflet-extras.github.io/leaflet-providers/preview/
 
   // Read markers data from data.csv
-  $.get('./data.csv', function(csvString) {
+  $.get('./data_nj.csv', function(csvString) {
 
     // Use PapaParse to convert string to array of objects
     var data = Papa.parse(csvString, {header: true, dynamicTyping: true}).data;
@@ -69,7 +69,7 @@
 
       var marker = L.marker([row.Latitude, row.Longitude], {
         opacity: 1
-      }).bindPopup(row.ETA);
+      }).bindPopup(row.Title).bindPopup(row.ETA).bindPopup(row.Updated).bindPopup(row.Franchisee).bindPopup(row.Phone);
       
       marker.addTo(map);
     }
