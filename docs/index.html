@@ -95,7 +95,7 @@
                     .then(response => response.json()) // Parse the response as JSON
                     .then(data => {
                         // Update the ETA value
-                        row.ETA = data['EstimatedWaitMinutes'];
+                        row.ETA = data.EstimatedWaitMinutes;
 
                         // Update the marker pop-up window
                         marker.bindPopup('<b> Domino\'s Store: ' + row.Title + '</b><br>' +
