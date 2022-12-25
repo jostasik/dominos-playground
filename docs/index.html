@@ -76,6 +76,7 @@
 
       // Create a string with the contents of the pop-up window
       var popupContent = '<b> Domino\'s Store: ' + row.Title + '</b><br>' +
+                         'Wait Time: ' + row.ETA + ' mins<br>' +
                          'Franchisee: ' + row.Franchisee + '<br>' +
                          'Store Phone: ' + row.Phone;
 
@@ -89,15 +90,13 @@
           .then(response => response.json()) // Parse the response as JSON
           .then(data => {
             // Update the ETA value
-            row.ETA = data['EstimatedWaitMinutes'],
-            row.Updated = data['StoreAsOfTime']
+            row.ETA = data['EstimatedWaitMinutes'];
 
             // Update the marker pop-up window
             marker.bindPopup('<b> Domino\'s Store: ' + row.Title + '</b><br>' +
                             'Wait Time: ' + row.ETA + ' mins<br>' +
                             'Franchisee: ' + row.Franchisee + '<br>' +
-                            'Store Phone: ' + row.Phone + '<br>' +
-                            'As Of: ' + row.Updated);
+                            'Store Phone: ' + row.Phone;
           });
       });
 
