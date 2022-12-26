@@ -20,7 +20,7 @@ var light = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}
 // see more basemap options at https://leaflet-extras.github.io/leaflet-providers/preview/
 
 // Read markers data from data.csv
-$.get('./xhrs/data_nj.csv', function(csvString) {
+$.get('xhrs/data_nj.csv', function(csvString) {
 
     // Use PapaParse to convert string to array of objects
     var data = Papa.parse(csvString, {
@@ -29,7 +29,7 @@ $.get('./xhrs/data_nj.csv', function(csvString) {
     }).data;
 
     var markerIcon = L.icon({
-        iconUrl: './images/marker.svg',
+        iconUrl: 'images/marker.svg',
         iconSize: [32, 32],
         // size of the icon
         iconAnchor: [16, 16] // point of the icon which will correspond to marker's location
