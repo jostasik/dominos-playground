@@ -2,140 +2,29 @@
 <html>
 
 <head>
+
     <title>Domino's Stats</title>
     <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <!-- Load Leaflet code library - see updates at http://leafletjs.com/download.html -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <!-- Load jQuery and PapaParse to read data from a CSV file -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
-    <!-- Position the map with Cascading Style Sheet (CSS) -->
-    <style>
-    body {
-        margin: 0;
-        padding: 0;
-    }
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/leaflet.js"></script>
+    <script src="js/papaparse.js"></script>
 
-    #map {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-    }
-    </style>
 </head>
 
 <body>
-    <!-- Insert HTML division tag to layout the map -->
+
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <script src="js/leaflet.js"></script>
     <div id="map"></div>
-    <!-- Insert Javascript (.js) code to create the map -->
-    <script>
-    // Set up initial map center and zoom level
-    var map = L.map('map', {
-        center: [40.4140, -74.3520],
-        // EDIT latitude, longitude to re-center map
-        zoom: 9.5,
-        // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
-        scrollWheelZoom: false,
-        tap: false
-    });
+    <script src="js/index.js"></script>
 
-    /* Control panel to display map layers */
-    var controlLayers = L.control.layers(null, null, {
-        position: "topright",
-        collapsed: false
-    }).addTo(map);
-
-    // display Carto basemap tiles with light features and labels
-    var light = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>'
-    }).addTo(map); // EDIT - insert or remove ".addTo(map)" before last semicolon to display by default
-    controlLayers.addBaseLayer(light, 'Carto Light basemap');
-
-    /* Stamen colored terrain basemap tiles with labels */
-    var terrain = L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png', {
-        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-    }); // EDIT - insert or remove ".addTo(map)" before last semicolon to display by default
-    controlLayers.addBaseLayer(terrain, 'Stamen Terrain basemap');
-
-    // see more basemap options at https://leaflet-extras.github.io/leaflet-providers/preview/
-
-    // Read markers data from data.csv
-    $.get('./XHRs/data_nj.csv', function(csvString) {
-
-        // Use PapaParse to convert string to array of objects
-        var data = Papa.parse(csvString, {
-            header: true,
-            dynamicTyping: true
-        }).data;
-
-        var markerIcon = L.icon({
-            iconUrl: './images/marker.svg',
-            iconSize: [32, 32],
-            // size of the icon
-            iconAnchor: [16, 16] // point of the icon which will correspond to marker's location
-        });
-
-        // For each row in data, create a marker and add it to the map
-        // For each row, columns `Latitude`, `Longitude`, and `Title` are required
-        for (var i in data) {
-            var row = data[i];
-
-            // Create a string with the contents of the pop-up window
-            var popupContent = '<b> Domino\'s Store: ' + row.Title + '</b><br>' +
-            'Wait Time: ' + row.ETA + ' mins<br>' +
-            'Franchisee: ' + row.Franchisee + '<br>' +
-            'Store Phone: ' + row.Phone;
-
-            // Create a marker and bind the pop-up window to it
-            var marker = L.marker([row.Latitude, row.Longitude], {
-                opacity: 1,
-                icon: markerIcon
-            }).bindPopup(popupContent);
-
-            // Set up the marker click event handler
-            marker.on('click', function() {
-                // Send a GET request to the server
-                fetch('https://order.dominos.com/power/store/' + row.Title + '/profile', {
-                    method: 'GET',
-                    mode: 'no-cors',
-                    cache: 'no-cache',
-                    credentials: 'same-origin',
-                    headers: {
-                        'Content-Type': 'application/json;charset=utf-8'
-                    },
-                    redirect: 'follow',
-                    referrerPolicy: 'no-referrer'
-                })
-                .then(response => response.json()) // Parse the response as JSON
-                .then(data => {
-                    // Update the ETA value
-                    row.ETA = data.EstimatedWaitMinutes;
-
-                    // Update the marker pop-up window
-                    marker.bindPopup('<b> Domino\'s Store: ' + row.Title + '</b><br>' +
-                    'Wait Time: ' + row.ETA + ' mins<br>' +
-                    'Franchisee: ' + row.Franchisee + '<br>' +
-                    'Store Phone: ' + row.Phone + '<br>' +
-                    'As Of: ' + row.UpdateTime);
-                });
-            });
-
-            marker.addTo(map);
-        }
-
-
-    });
-
-    map.attributionControl.setPrefix(
-    'View <a href="https://github.com/jostasik/dominos" target="_blank">code on GitHub</a>'
-    );
-    </script>
 </body>
 
-</html>
+<script src="js/jquery.js"></script>
+<script src="js/papaparse.js"></script>
 
+</html>
