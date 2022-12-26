@@ -2,11 +2,12 @@
 <html>
 
 <head>
-    <title>project by @jostasik</title>
+    <title>Domino's Stats</title>
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <!-- Load Leaflet code library - see updates at http://leafletjs.com/download.html -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <!-- Load jQuery and PapaParse to read data from a CSV file -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -35,8 +36,10 @@
     <script>
     // Set up initial map center and zoom level
     var map = L.map('map', {
-        center: [40.4140, -74.3520], // EDIT latitude, longitude to re-center map
-        zoom: 9.5, // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
+        center: [40.4140, -74.3520],
+        // EDIT latitude, longitude to re-center map
+        zoom: 9.5,
+        // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
         scrollWheelZoom: false,
         tap: false
     });
@@ -62,17 +65,20 @@
     // see more basemap options at https://leaflet-extras.github.io/leaflet-providers/preview/
 
     // Read markers data from data.csv
-    $.get('./data_nj.csv', function(csvString) {
+    $.get('./XHRs/data_nj.csv', function(csvString) {
 
         // Use PapaParse to convert string to array of objects
-        var data = Papa.parse(csvString, { header: true, dynamicTyping: true }).data;
+        var data = Papa.parse(csvString, {
+            header: true,
+            dynamicTyping: true
+        }).data;
 
         var markerIcon = L.icon({
-            iconUrl: 'dpz-logo.svg',
-            iconSize: [32, 32], // size of the icon
+            iconUrl: './images/marker.svg',
+            iconSize: [32, 32],
+            // size of the icon
             iconAnchor: [16, 16] // point of the icon which will correspond to marker's location
         });
-
 
         // For each row in data, create a marker and add it to the map
         // For each row, columns `Latitude`, `Longitude`, and `Title` are required
@@ -81,29 +87,42 @@
 
             // Create a string with the contents of the pop-up window
             var popupContent = '<b> Domino\'s Store: ' + row.Title + '</b><br>' +
-                'Wait Time: ' + row.ETA + ' mins<br>' +
-                'Franchisee: ' + row.Franchisee + '<br>' +
-                'Store Phone: ' + row.Phone;
+            'Wait Time: ' + row.ETA + ' mins<br>' +
+            'Franchisee: ' + row.Franchisee + '<br>' +
+            'Store Phone: ' + row.Phone;
 
             // Create a marker and bind the pop-up window to it
-            var marker = L.marker([row.Latitude, row.Longitude], { opacity: 1, icon: markerIcon }).bindPopup(popupContent);
+            var marker = L.marker([row.Latitude, row.Longitude], {
+                opacity: 1,
+                icon: markerIcon
+            }).bindPopup(popupContent);
 
             // Set up the marker click event handler
             marker.on('click', function() {
                 // Send a GET request to the server
-                fetch('https://order.dominos.com/power/store/' + row.Title + '/profile')
-                    .then(response => response.json()) // Parse the response as JSON
-                    .then(data => {
-                        // Update the ETA value
-                        row.ETA = data.EstimatedWaitMinutes;
+                fetch('https://order.dominos.com/power/store/' + row.Title + '/profile', {
+                    method: 'GET',
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    redirect: 'follow',
+                    referrerPolicy: 'no-referrer'
+                })
+                .then(response => response.json()) // Parse the response as JSON
+                .then(data => {
+                    // Update the ETA value
+                    row.ETA = data.EstimatedWaitMinutes;
 
-                        // Update the marker pop-up window
-                        marker.bindPopup('<b> Domino\'s Store: ' + row.Title + '</b><br>' +
-                            'Wait Time: ' + row.ETA + ' mins<br>' +
-                            'Franchisee: ' + row.Franchisee + '<br>' +
-                            'Store Phone: ' + row.Phone + '<br>' +
-                            'As Of: ' + row.UpdateTime);
-                    });
+                    // Update the marker pop-up window
+                    marker.bindPopup('<b> Domino\'s Store: ' + row.Title + '</b><br>' +
+                    'Wait Time: ' + row.ETA + ' mins<br>' +
+                    'Franchisee: ' + row.Franchisee + '<br>' +
+                    'Store Phone: ' + row.Phone + '<br>' +
+                    'As Of: ' + row.UpdateTime);
+                });
             });
 
             marker.addTo(map);
@@ -113,9 +132,10 @@
     });
 
     map.attributionControl.setPrefix(
-        'View <a href="https://github.com/jostasik/dominos" target="_blank">code on GitHub</a>'
+    'View <a href="https://github.com/jostasik/dominos" target="_blank">code on GitHub</a>'
     );
     </script>
 </body>
 
 </html>
+
