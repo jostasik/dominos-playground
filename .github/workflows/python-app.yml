@@ -16,10 +16,9 @@ jobs:
         python-version: 3.11
     - name: python setup
       run: python -m pip install --upgrade pip setuptools requests 
-    - name: change dir to /srv/
-      run: cd srv
+      
     - name: fetch urls
-      run: python fetch.v2.py
+      run: python ./srv/fetch.v2.py
 
     # Commit and push all changed files.
     - name: GIT Commit
