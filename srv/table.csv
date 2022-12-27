@@ -1,4 +1,4 @@
-storeNum,phone,street,city,state,zipCode,isOpen,storeTime,latitude,longitude,carryoutEta,deliveryEta
+store,phone,street,city,state,zipCode,isOpen,storeTime,latitude,longitude,carryoutEta,deliveryEta
 1070,,,,,,,,,,,
 1050,,,,,,,,,,,
 1008,,,,,,,,,,,
