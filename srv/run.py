@@ -1,27 +1,26 @@
 import concurrent.futures
 import csv
 import requests
+import os
+import json
 
 def update_eta(store):
     r = requests.get('https://order.dominos.com/power/store/'+str(store)+'/profile').json()
     try:
-        phone = r["Phone"]
-        street = r["StreetName"]
-        city = r["City"]
-        state = r["Region"]
-        zipcode = r["PostalCode"]
         isOpen = r["IsOpen"]
-        storeTime = r["StoreAsOfTime"]
+        phone = r["Phone"]
         latitude = r["StoreLocation"]["Latitude"]
         longitude = r["StoreLocation"]["Longitude"]
-        carryoutEta = r["EstimatedWaitMinutes"]
-        deliveryEta = r["EstimatedWaitMinutes"]
-        return store, phone, street, city, state, zipcode, isOpen, storeTime, latitude, longitude, carryoutEta, deliveryEta
+        city = r["City"]
+        state = r["Region"]
+        storeTime = r["StoreAsOfTime"]
+        deliveryEta = r['EstimatedWaitMinutes']
+        return store, isOpen, phone, latitude, longitude, city, state, storeTime, deliveryEta
     except Exception as e:
         print(e)
-        return
+        return store, None, None, None
 
-with open('./srv/table.csv', 'r') as csvfile:
+with open('persistData.csv', 'r') as csvfile:
     # Create a CSV reader object
     reader = csv.reader(csvfile)
 
@@ -41,16 +40,16 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 
     # Iterate over the completed tasks and process the results
     for future in concurrent.futures.as_completed(results):
-        store, phone, street, city, state, zipcode, isOpen, storeTime, latitude, longitude, carryoutEta, deliveryEta = future.result()
-        rows.append([store, phone, street, city, state, zipcode, isOpen, storeTime, latitude, longitude, carryoutEta, deliveryEta])
+        store, isOpen, phone, latitude, longitude, city, state, storeTime, deliveryEta = future.result()
+        rows.append([store, isOpen, phone, latitude, longitude, city, state, storeTime, deliveryEta])
 
 # Open the file in write mode
-with open('./srv/table.csv', 'w', newline='') as csvfile:
+with open('refreshData.csv', 'w', newline='') as csvfile:
     # Create a CSV writer object
     writer = csv.writer(csvfile)
 
     # Write the header row
-    writer.writerow(header)
+    writer.writerow(['Store', 'IsOpen', 'Phone', 'Latitude', 'Longitude', 'City', 'Region', 'StoreAsOfTime', 'EstimatedWaitMinutes'])
 
     # Write the updated rows
     for row in rows:
