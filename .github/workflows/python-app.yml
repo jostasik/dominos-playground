@@ -15,7 +15,7 @@ jobs:
       with:
         python-version: 3.8 
     - name: python setup
-      run: pip install requests && python ./srv/fetch.v2.py
+      run: pip install requests && cd srv/ && python fetch.v2.py
 
     # Commit and push all changed files.
     - name: GIT Commit
