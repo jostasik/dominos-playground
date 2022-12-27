@@ -20,7 +20,7 @@ def update_eta(store):
         print(e)
         return store, None, None, None
 
-with open('persistData.csv', 'r') as csvfile:
+with open('./srv/persistData.csv', 'r') as csvfile:
     # Create a CSV reader object
     reader = csv.reader(csvfile)
 
@@ -44,7 +44,7 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
         rows.append([store, isOpen, phone, latitude, longitude, city, state, storeTime, deliveryEta])
 
 # Open the file in write mode
-with open('refreshData.csv', 'w', newline='') as csvfile:
+with open('./srv/refreshData.csv', 'w', newline='') as csvfile:
     # Create a CSV writer object
     writer = csv.writer(csvfile)
 
