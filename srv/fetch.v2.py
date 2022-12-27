@@ -1,7 +1,6 @@
 import concurrent.futures
 import csv
 import requests
-import pandas as pd
 
 def update_eta(store):
     r = requests.get('https://order.dominos.com/power/store/'+str(store)+'/profile').json()
