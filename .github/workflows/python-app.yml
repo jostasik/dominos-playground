@@ -1,7 +1,8 @@
 name: Continuous Integration
 on:
   schedule:
-    - cron: "15/30 * * * *"
+    - cron: "15 * * * *"
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
