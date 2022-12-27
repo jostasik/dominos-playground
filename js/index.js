@@ -44,7 +44,8 @@ $.get('xhrs/data_nj.csv', function(csvString) {
         var popupContent = '<b> Domino\'s Store: ' + row.Title + '</b><br>' +
         'Wait Time: ' + row.ETA + ' mins<br>' +
         'Franchisee: ' + row.Franchisee + '<br>' +
-        'Store Phone: ' + row.Phone;
+        'Store Phone: ' + row.Phone + '<br>' +
+        'As Of: ' + row.Updated;
 
         // Create a marker and bind the pop-up window to it
         var marker = L.marker([row.Latitude, row.Longitude], {
@@ -78,7 +79,7 @@ $.get('xhrs/data_nj.csv', function(csvString) {
                 'Wait Time: ' + row.ETA + ' mins<br>' +
                 'Franchisee: ' + row.Franchisee + '<br>' +
                 'Store Phone: ' + row.Phone + '<br>' +
-                'As Of: ' + row.UpdateTime);
+                'As Of: ' + row.Updated);
         });
 
         marker.addTo(map);
