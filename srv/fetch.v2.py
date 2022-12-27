@@ -21,7 +21,7 @@ def update_eta(store):
         print(e)
         return
 
-with open('table.csv', 'r') as csvfile:
+with open('./srv/table.csv', 'r') as csvfile:
     # Create a CSV reader object
     reader = csv.reader(csvfile)
 
@@ -45,7 +45,7 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
         rows.append([store, phone, street, city, state, zipcode, isOpen, storeTime, latitude, longitude, carryoutEta, deliveryEta])
 
 # Open the file in write mode
-with open('stats.csv', 'w', newline='') as csvfile:
+with open('./srv/table.csv', 'w', newline='') as csvfile:
     # Create a CSV writer object
     writer = csv.writer(csvfile)
 
