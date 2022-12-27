@@ -11,11 +11,15 @@ jobs:
       CI_COMMIT_AUTHOR: Continuous Integration
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v4
       with:
-        python-version: 3.8 
+        python-version: 3.11
     - name: python setup
-      run: pip install requests && cd srv/ && python fetch.v2.py
+      run: pip install requests 
+    - name: change dir to /srv/
+      run: cd srv
+    - name: fetch urls
+      run: python fetch.v2.py
 
     # Commit and push all changed files.
     - name: GIT Commit
