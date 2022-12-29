@@ -2,9 +2,9 @@
 var map = L.map('map', {
     center: [40.4140, -74.3520],
     // EDIT latitude, longitude to re-center map
-    zoom: 12,
+    zoom: 4.4,
     // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
-    scrollWheelZoom: false,
+    scrollWheelZoom: true,
     tap: false
 });
 
@@ -17,6 +17,8 @@ var controlLayers = L.control.layers(null, null, {
 var light = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>'}).addTo(map);
 
 //'Store', 'IsOpen', 'Phone', 'City', 'Region', 'StoreAsOfTime', 'EstimatedWaitMinutes'
+
+var markerClusterGroup = L.markerClusterGroup().addTo(map);
 
 
 // see more basemap options at https://leaflet-extras.github.io/leaflet-providers/preview/
@@ -43,7 +45,7 @@ $.get('srv/refreshData.csv', function(csvString) {var data = Papa.parse(csvStrin
             icon: markerIcon
         }).bindPopup(popupContent);
 
-    marker.addTo(map);
+    markerClusterGroup.addLayer(marker);
     }
 
 
