@@ -19,7 +19,7 @@ def update_eta(store_info):
 
 
 
-with open('storeData.csv', 'r') as csvfile:
+with open('./srv/storeData.csv', 'r') as csvfile:
     # Create a CSV reader object
     reader = csv.reader(csvfile)
 
@@ -45,7 +45,7 @@ for future in concurrent.futures.as_completed(results):
 
 
 # Open the file in write mode
-with open('latestStats.csv', 'w', newline='') as csvfile:
+with open('./srv/latestStats.csv', 'w', newline='') as csvfile:
     # Create a CSV writer object
     writer = csv.writer(csvfile)
 
