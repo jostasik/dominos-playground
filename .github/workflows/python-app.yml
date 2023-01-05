@@ -1,11 +1,11 @@
 name: Continuous Integration
 on:
   schedule:
-    - cron: "15 * * * *"
+    - cron: "11 * * * *"
   workflow_dispatch:
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env: 
       CI_COMMIT_MESSAGE: Updated Store Statistics
       CI_COMMIT_AUTHOR: a good boy (..or bot)
