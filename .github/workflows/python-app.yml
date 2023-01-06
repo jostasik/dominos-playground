@@ -1,14 +1,14 @@
 name: Continuous Integration
 on:
   schedule:
-    - cron: "11 * * * *"
+    - cron: "5,25,45 0-2,10-23 * * *"
   workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
     env: 
       CI_COMMIT_MESSAGE: Updated Store Statistics
-      CI_COMMIT_AUTHOR: a good boy (..or bot)
+      CI_COMMIT_AUTHOR: Auto Refresh
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
