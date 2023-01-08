@@ -27,7 +27,13 @@ controlLayers.addBaseLayer(satellite, 'Satellite')
 
 //'Store', 'IsOpen', 'Phone', 'City', 'Region', 'StoreAsOfTime', 'EstimatedWaitMinutes'
 
-var markerClusterGroup = L.markerClusterGroup().addTo(map);
+var markerClusterGroup = L.markerClusterGroup({
+	maxClusterRadius: 70,
+    disableClusteringAtZoom: 11,
+	showCoverageOnHover: true,
+	zoomToBoundsOnClick: true,
+
+}).addTo(map);
 
 
 // see more basemap options at https://leaflet-extras.github.io/leaflet-providers/preview/
