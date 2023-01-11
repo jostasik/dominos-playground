@@ -12,7 +12,6 @@ var map = L.map("map", {
 var controlLayers = L.control.layers(null, null, { position: "topright", collapsed: false }).addTo(map)
 
 var dark = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png")
-var dark = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png")
 controlLayers.addBaseLayer(dark, "Dark")
 var light = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright"></a>, &copy; <a href="https://carto.com/attribution"></a>',
