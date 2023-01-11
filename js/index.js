@@ -9,14 +9,9 @@ var map = L.map("map", {
   tap: false,
 })
 
-/* Control panel to display map layers */
-var controlLayers = L.control
-  .layers(null, null, {
-    position: "topright",
-    collapsed: false,
-  })
-  .addTo(map)
+var controlLayers = L.control.layers(null, null, { position: "topright", collapsed: false }).addTo(map)
 
+var dark = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png")
 var dark = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png")
 controlLayers.addBaseLayer(dark, "Dark")
 var light = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
@@ -32,40 +27,23 @@ var satellite = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/service
 })
 controlLayers.addBaseLayer(satellite, "Satellite")
 
-//'Store', 'IsOpen', 'Phone', 'City', 'Region', 'StoreAsOfTime', 'EstimatedWaitMinutes'
+var markerClusterGroup = L.markerClusterGroup({ maxClusterRadius: 70, showCoverageOnHover: true, zoomToBoundsOnClick: true }).addTo(map)
 
-var markerClusterGroup = L.markerClusterGroup({
-  maxClusterRadius: 70,
-  // disableClusteringAtZoom: 11,
-  showCoverageOnHover: true,
-  zoomToBoundsOnClick: true,
-}).addTo(map)
-
-// see more basemap options at https://leaflet-extras.github.io/leaflet-providers/preview/
-
-// Read markers data from data.csv
 $.get("srv/latestStats.csv", function (csvString) {
   var data = Papa.parse(csvString, { header: true, dynamicTyping: true }).data
 
-  var markerIcon = L.icon({
-    iconUrl: "images/marker.svg",
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
-  })
+  var markerIcon = L.icon({ iconUrl: "images/marker.svg", iconSize: [32, 32], iconAnchor: [16, 16] })
 
   for (var i in data) {
     var row = data[i]
 
     const url = "https://dominos-backend.vercel.app/api/profile?storeId=" + row.StoreID
+    const url = "https://dominos-backend.vercel.app/api/profile?storeId=" + row.StoreID
 
     // Create a string with the contents of the pop-up window
     const popupContent = "<em>Domino's #<b>" + row.StoreID + "</b></em><br>" + "<i> Franchisee: " + row.Franchisee + "</i></br>" + "Phone: " + row.Phone + "<br>" + "City: " + row.City + ", " + row.State
 
-    // Create a marker and bind the pop-up window to it
-    var marker = L.marker([row.Latitude, row.Longitude], {
-      opacity: 1,
-      icon: markerIcon,
-    }).bindPopup(popupContent)
+    var marker = L.marker([row.Latitude, row.Longitude], { opacity: 1, icon: markerIcon }).bindPopup(popupContent)
 
     markerClusterGroup.addLayer(marker)
 
