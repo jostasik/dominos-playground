@@ -1,9 +1,10 @@
 // Set up initial map center and zoom level
 var map = L.map("map", {
-  center: [40.116, -75.152],
-  // EDIT latitude, longitude to re-center map
-  zoom: 7,
-  // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
+  center: [42, -97],
+  zoom: 4.0,
+  minZoom: 3,
+  maxZoom: 14,
+  zoomSnap: 1,
   scrollWheelZoom: true,
   tap: false,
 })
@@ -16,30 +17,19 @@ var controlLayers = L.control
   })
   .addTo(map)
 
-var dark = L.tileLayer(
-  "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
-)
+var dark = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png")
 controlLayers.addBaseLayer(dark, "Dark")
-var light = L.tileLayer(
-  "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-  {
-    attribution:
-      '&copy; <a href="http://www.openstreetmap.org/copyright"></a>, &copy; <a href="https://carto.com/attribution"></a>',
-  }
-)
+var light = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright"></a>, &copy; <a href="https://carto.com/attribution"></a>',
+})
 controlLayers.addBaseLayer(light, "Light")
 var street = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution:
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map)
 controlLayers.addBaseLayer(street, "Street")
-var satellite = L.tileLayer(
-  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-  {
-    attribution:
-      "&copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP",
-  }
-)
+var satellite = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+  attribution: "&copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP",
+})
 controlLayers.addBaseLayer(satellite, "Satellite")
 
 //'Store', 'IsOpen', 'Phone', 'City', 'Region', 'StoreAsOfTime', 'EstimatedWaitMinutes'
@@ -66,24 +56,10 @@ $.get("srv/latestStats.csv", function (csvString) {
   for (var i in data) {
     var row = data[i]
 
-    const url =
-      "https://dominos-backend.vercel.app/api/profile?storeId=" + row.StoreID
+    const url = "https://dominos-backend.vercel.app/api/profile?storeId=" + row.StoreID
 
     // Create a string with the contents of the pop-up window
-    const popupContent =
-      "<em>Domino's #<b>" +
-      row.StoreID +
-      "</b></em><br>" +
-      "<i> Franchisee: " +
-      row.Franchisee +
-      "</i></br>" +
-      "Phone: " +
-      row.Phone +
-      "<br>" +
-      "City: " +
-      row.City +
-      ", " +
-      row.State
+    const popupContent = "<em>Domino's #<b>" + row.StoreID + "</b></em><br>" + "<i> Franchisee: " + row.Franchisee + "</i></br>" + "Phone: " + row.Phone + "<br>" + "City: " + row.City + ", " + row.State
 
     // Create a marker and bind the pop-up window to it
     var marker = L.marker([row.Latitude, row.Longitude], {
@@ -121,6 +97,4 @@ $.get("srv/latestStats.csv", function (csvString) {
   }
 })
 
-map.attributionControl.setPrefix(
-  'developed by <a href="https://github.com/jostasik/dominos" target="_blank">@jostasik</a>'
-)
+map.attributionControl.setPrefix('developed by <a href="https://github.com/jostasik/dominos" target="_blank">@jostasik</a>')
