@@ -38,7 +38,6 @@ $.get("srv/latestStats.csv", function (csvString) {
     var row = data[i]
 
     const url = "https://dominos-backend.vercel.app/api/profile?storeId=" + row.StoreID
-    const url = "https://dominos-backend.vercel.app/api/profile?storeId=" + row.StoreID
 
     // Create a string with the contents of the pop-up window
     const popupContent = "<em>Domino's #<b>" + row.StoreID + "</b></em><br>" + "<i> Franchisee: " + row.Franchisee + "</i></br>" + "Phone: " + row.Phone + "<br>" + "City: " + row.City + ", " + row.State
