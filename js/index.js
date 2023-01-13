@@ -28,7 +28,7 @@ controlLayers.addBaseLayer(satellite, "Satellite")
 
 var markerClusterGroup = L.markerClusterGroup({ maxClusterRadius: 70, showCoverageOnHover: true, zoomToBoundsOnClick: true }).addTo(map)
 
-$.get("srv/latestStats.csv", function (csvString) {
+$.get("srv/storeDetails.csv", function (csvString) {
   var data = Papa.parse(csvString, { header: true, dynamicTyping: true }).data
 
   var markerIcon = L.icon({ iconUrl: "images/marker.svg", iconSize: [32, 32], iconAnchor: [16, 16] })
@@ -39,7 +39,7 @@ $.get("srv/latestStats.csv", function (csvString) {
     const url = "https://dominos-backend.vercel.app/api/profile?storeId=" + row.StoreID
 
     // Create a string with the contents of the pop-up window
-    const popupContent = "<em>Domino's #<b>" + row.StoreID + "</b></em><br>" + "<i> Franchisee: " + row.Franchisee + "</i></br>" + "Phone: " + row.Phone + "<br>" + "City: " + row.City + ", " + row.State
+    const popupContent = "<b>Domino's #" + row.StoreID + "<br>" + "Franchisee: " + row.Franchisee + "</b>"
 
     var marker = L.marker([row.Latitude, row.Longitude], { opacity: 1, icon: markerIcon }).bindPopup(popupContent)
 
@@ -49,10 +49,18 @@ $.get("srv/latestStats.csv", function (csvString) {
       var popup = e.target.getPopup()
       $.getJSON(url).done(function (data) {
         var liveDetails =
+          "<span style='right'><i>City: " +
+          data.City +
+          ", " +
+          data.Region +
+          "<br>" +
+          "Phone: " +
+          data.Phone +
           "<hr>" +
-          'Open: <span style="text-transform:capitalize"><b>' +
+          "Open: <span style='text-transform:capitalize'><b>" +
           data.IsOpen +
-          "</b></span><br>" +
+          "</b><sup>1</sup>" +
+          "<br>" +
           "Deliveries: <b>" +
           data.ServiceMethodEstimatedWaitMinutes.Delivery.Min +
           "-" +
