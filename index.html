@@ -14,7 +14,7 @@
     <meta name="language" content="English" />
     <meta name="author" content="Joe Stasik" />
     <meta name="contact" content="jostasik@outlook.com" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://jostasik.com/dominos/" />
     <meta property="og:title" content="Domino's Stats" />
@@ -46,11 +46,51 @@
   </head>
 
   <body>
+    <header>
+      <nav class="navbar navbar-custom navbar-expand-lg bg-dark navbar-dark">
+        <div class="container">
+          <a class="navbar-brand" href="https://jostasik.com">@jostasik</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="https://jostasik.com">home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/about">about</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://github.com/jostasik">github</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                  >projects</a
+                >
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="/dominos">dominos map</a></li>
+                  <li><a class="dropdown-item" href="/filesurfer">filesurfer</a></li>
+                  <li><a class="dropdown-item" href="https://github.com/jostasik/Flowgorithm-macOS/">flowgorithm</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
     <script src="js/leaflet.min.js"></script>
     <script src="js/leaflet.markercluster.min.js"></script>
     <script src="js/map.js" defer></script>
     <script src="js/markers.js" defer></script>
-    <div id="map"></div>
+    <div id="map" class="map-custom"></div>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
       integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"

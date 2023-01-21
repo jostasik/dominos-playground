@@ -1,9 +1,13 @@
 body {
+  height: 100vh;
   margin: 0;
   padding: 0;
 }
 
-#map {
-  width: 100vw;
-  height: 100vh;
+.navbar-custom {
+  height: 4vh;
+}
+
+.map-custom {
+  height: 96vh;
 }
