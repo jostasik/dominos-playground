@@ -4,10 +4,12 @@ body {
   padding: 0;
 }
 
-.navbar-custom {
+.navbar {
   height: 4vh;
+  z-index: 2;
 }
 
 .map-custom {
+  z-index: -1;
   height: 96vh;
 }
