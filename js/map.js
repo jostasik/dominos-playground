@@ -1,14 +1,14 @@
 var map = L.map("map", {
-  center: [40, -90],
-  zoom: 5,
+  center: [37, -96],
+  zoom: 4,
   minZoom: 3,
   maxZoom: 14,
   zoomSnap: 0.5,
   scrollWheelZoom: true,
   tap: false,
   maxBounds: [
-    [56, -126],
-    [22, -70],
+    [2.826395, -151.609901],
+    [61.108057, -39.461464],
   ],
 })
 
@@ -19,6 +19,16 @@ var markerClusterGroup = L.markerClusterGroup({
   chunkedLoading: true,
 }).addTo(map)
 
+L.control
+  .locate({
+    position: "topleft",
+    locateOptions: {
+      flyTo: true,
+      maxZoom: 12,
+    },
+  })
+  .addTo(map)
+
 var markerIcon = L.icon({ iconUrl: "images/marker.svg", iconSize: [32, 32], iconAnchor: [16, 16] })
 
 var controlLayers = L.control.layers(null, null, { position: "topright", collapsed: false }).addTo(map)
@@ -27,7 +37,7 @@ var light = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}
   attribution: '&copy; <a href="https://carto.com/attribution">Carto</a>',
 })
 controlLayers.addBaseLayer(light, "Light")
-var dark = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+var dark = L.tileLayer("https://{s}.basemaps.cartocdn.com/spotify_dark/{z}/{x}/{y}{r}.png", {
   attribution: '&copy; <a href="https://carto.com/attribution">Carto</a>',
 })
 controlLayers.addBaseLayer(dark, "Dark")
