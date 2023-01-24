@@ -12,26 +12,9 @@ var map = L.map("map", {
   ],
 })
 
-var markerClusterGroup = L.markerClusterGroup({
-  maxClusterRadius: 90,
-  showCoverageOnHover: true,
-  zoomToBoundsOnClick: true,
-  chunkedLoading: true,
-}).addTo(map)
-
-L.control
-  .locate({
-    position: "topleft",
-    locateOptions: {
-      flyTo: true,
-      maxZoom: 12,
-    },
-  })
-  .addTo(map)
-
 var markerIcon = L.icon({ iconUrl: "images/marker.svg", iconSize: [32, 32], iconAnchor: [16, 16] })
 
-var controlLayers = L.control.layers(null, null, { position: "topright", collapsed: false }).addTo(map)
+var controlLayers = L.control.layers(null, null, { position: "topright" }).addTo(map)
 
 var street = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> map tiles',
@@ -47,5 +30,22 @@ var light = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}
   attribution: '&copy; <a href="https://carto.com/attribution">Carto</a> map tiles',
 })
 controlLayers.addBaseLayer(light, "Light")
+
+L.control
+  .locate({
+    position: "topleft",
+    locateOptions: {
+      flyTo: true,
+      maxZoom: 12,
+    },
+  })
+  .addTo(map)
+
+var markers = L.markerClusterGroup({
+  maxClusterRadius: 90,
+  showCoverageOnHover: true,
+  zoomToBoundsOnClick: true,
+  chunkedLoading: true,
+}).addTo(map)
 
 map.attributionControl.setPrefix('developed by <a href="https://jostasik.com" target="_blank">Joe Stasik</a>')

@@ -1,45 +1,38 @@
+const url = "https://dominos-backend.vercel.app/api/profile?storeId="
+
+var template = `
+Domino's <b>{{storeId}}</b><br>
+Franchisee: {{franchisee}}<br>
+<span style='right'><i>City: {{city}}, {{region}}<br>
+Phone: {{phone}}<hr>
+Open: <span style='text-transform:capitalize'><b>{{isOpen}}</b><br>
+Deliveries: <b>{{deliveryMin}}-{{deliveryMax}}</b> mins<br>
+Carryouts: <b>{{carryoutMin}}-{{carryoutMax}}</b> mins<br>
+<sub><i>as of: {{storeAsOfTime}}</i></sub>`
+
 $.getJSON("data/info.json", function (data) {
-  for (var i in data) {
-    var row = data[i]
-    const url = "https://dominos-backend.vercel.app/api/profile?storeId=" + row.i
-    const popupContent = "<b>Domino's #" + row.i + "<br>" + "Franchisee: " + row.f + "</b>"
-
-    var marker = L.marker([row.y, row.x], { opacity: 1, icon: markerIcon }).bindPopup(popupContent)
-
-    markerClusterGroup.addLayer(marker)
-
+  data.forEach(function (row) {
+    var marker = L.marker([row.y, row.x], { opacity: 1, icon: markerIcon }).bindPopup("Loading...")
+    markers.addLayer(marker)
     marker.on("click", function (e) {
       var popup = e.target.getPopup()
-      $.getJSON(url).done(function (data) {
-        var liveDetails =
-          "<span style='right'><i>City: " +
-          data.City +
-          ", " +
-          data.Region +
-          "<br>" +
-          "Phone: " +
-          data.Phone +
-          "<hr>" +
-          "Open: <span style='text-transform:capitalize'><b>" +
-          data.IsOpen +
-          "</b><sup>1</sup>" +
-          "<br>" +
-          "Deliveries: <b>" +
-          data.ServiceMethodEstimatedWaitMinutes.Delivery.Min +
-          "-" +
-          data.ServiceMethodEstimatedWaitMinutes.Delivery.Max +
-          "</b> mins<sup>1</sup><br>" +
-          "Carryouts: <b>" +
-          data.ServiceMethodEstimatedWaitMinutes.Carryout.Min +
-          "-" +
-          data.ServiceMethodEstimatedWaitMinutes.Carryout.Max +
-          "</b> mins<sup>1</sup><br>" +
-          "<sub><sup>[1]</sup><i>as of: " +
-          data.StoreAsOfTime +
-          "</i></sub>"
-        popup.setContent(popupContent + "<br>" + liveDetails)
+      $.getJSON(url + row.i).done(function (data) {
+        var liveDetails = template
+          .replace("{{storeId}}", row.i)
+          .replace("{{franchisee}}", row.f)
+          .replace("{{city}}", data.City)
+          .replace("{{region}}", data.Region)
+          .replace("{{phone}}", data.Phone)
+          .replace("{{isOpen}}", data.IsOpen)
+          .replace("{{deliveryMin}}", data.ServiceMethodEstimatedWaitMinutes.Delivery.Min)
+          .replace("{{deliveryMax}}", data.ServiceMethodEstimatedWaitMinutes.Delivery.Max)
+          .replace("{{carryoutMin}}", data.ServiceMethodEstimatedWaitMinutes.Carryout.Min)
+          .replace("{{carryoutMax}}", data.ServiceMethodEstimatedWaitMinutes.Carryout.Max)
+          .replace("{{storeAsOfTime}}", data.StoreAsOfTime)
+
+        popup.setContent(liveDetails)
         popup.update()
       })
     })
-  }
+  })
 })
