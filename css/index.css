@@ -4,10 +4,6 @@ body {
   padding: 0;
 }
 
-.navbar {
-  height: 4vh;
-}
-
 .map-custom {
-  height: 96vh;
+  height: 100vh;
 }

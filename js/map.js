@@ -13,7 +13,7 @@ var map = L.map("map", {
 })
 
 var markerClusterGroup = L.markerClusterGroup({
-  maxClusterRadius: 100,
+  maxClusterRadius: 90,
   showCoverageOnHover: true,
   zoomToBoundsOnClick: true,
   chunkedLoading: true,
@@ -33,17 +33,19 @@ var markerIcon = L.icon({ iconUrl: "images/marker.svg", iconSize: [32, 32], icon
 
 var controlLayers = L.control.layers(null, null, { position: "topright", collapsed: false }).addTo(map)
 
-var light = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-  attribution: '&copy; <a href="https://carto.com/attribution">Carto</a>',
-})
-controlLayers.addBaseLayer(light, "Light")
-var dark = L.tileLayer("https://{s}.basemaps.cartocdn.com/spotify_dark/{z}/{x}/{y}{r}.png", {
-  attribution: '&copy; <a href="https://carto.com/attribution">Carto</a>',
-})
-controlLayers.addBaseLayer(dark, "Dark")
 var street = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> map tiles',
 }).addTo(map)
 controlLayers.addBaseLayer(street, "Street")
 
-map.attributionControl.setPrefix('developed by <a href="https://github.com/jostasik/dominos" target="_blank">@jostasik</a>')
+var dark = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+  attribution: '&copy; <a href="https://carto.com/attribution">Carto</a> map tiles',
+})
+controlLayers.addBaseLayer(dark, "Dark")
+
+var light = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+  attribution: '&copy; <a href="https://carto.com/attribution">Carto</a> map tiles',
+})
+controlLayers.addBaseLayer(light, "Light")
+
+map.attributionControl.setPrefix('developed by <a href="https://jostasik.com" target="_blank">Joe Stasik</a>')
