@@ -1,6 +1,4 @@
-$.get("data/info.csv", function (csvString) {
-  var data = Papa.parse(csvString, { header: true, dynamicTyping: true }).data
-
+$.getJSON("data/info.json", function (data) {
   for (var i in data) {
     var row = data[i]
     const url = "https://dominos-backend.vercel.app/api/profile?storeId=" + row.StoreID
