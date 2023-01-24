@@ -1,10 +1,10 @@
 $.getJSON("data/info.json", function (data) {
   for (var i in data) {
     var row = data[i]
-    const url = "https://dominos-backend.vercel.app/api/profile?storeId=" + row.StoreID
-    const popupContent = "<b>Domino's #" + row.StoreID + "<br>" + "Franchisee: " + row.Franchisee + "</b>"
+    const url = "https://dominos-backend.vercel.app/api/profile?storeId=" + row.i
+    const popupContent = "<b>Domino's #" + row.i + "<br>" + "Franchisee: " + row.f + "</b>"
 
-    var marker = L.marker([row.Latitude, row.Longitude], { opacity: 1, icon: markerIcon }).bindPopup(popupContent)
+    var marker = L.marker([row.y, row.x], { opacity: 1, icon: markerIcon }).bindPopup(popupContent)
 
     markerClusterGroup.addLayer(marker)
 
