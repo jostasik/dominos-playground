@@ -3,6 +3,8 @@ map.attributionControl.setPrefix('developed by <a href="https://jostasik.com" ta
 
 const markerIcon = L.icon({ iconUrl: "images/marker.svg", iconSize: [32, 32], iconAnchor: [16, 16] })
 
+const supplyccIcon = L.icon({ iconUrl: "images/scc.svg", iconSize: [32, 32], iconAnchor: [16, 16] })
+
 const street = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 }).addTo(map)
@@ -67,4 +69,15 @@ $.get("data/stores.csv", function (csvString) {
   }
 })
 
-const markerGroup = L.markerClusterGroup({ maxClusterRadius: 60 }).addTo(map)
+$.get("data/supplycc.csv", function (csvString) {
+  var supplycc = Papa.parse(csvString, { header: true, dynamicTyping: true }).data
+
+  for (var i in supplycc) {
+    var row = supplycc[i]
+    const popupContent = "<b>Supply Chain Center</b><br>" + "Address: " + row.Address + "<br>"
+    let sccMarker = L.marker([row.Latitude, row.Longitude], { opacity: 1, icon: supplyccIcon }).bindPopup(popupContent)
+    map.addLayer(sccMarker)
+  }
+})
+
+const markerGroup = L.markerClusterGroup({ maxClusterRadius: 100 }).addTo(map)
