@@ -10,9 +10,9 @@ body {
 
 /* SVG spinner icon animation */
 .spinner {
-  -webkit-animation: rotate 2s linear infinite;
-  animation: rotate 2s linear infinite;
-  z-index: 2;
+  -webkit-animation: rotate 1s linear infinite;
+  animation: rotate 1s linear infinite;
+  z-index: 1;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -21,7 +21,7 @@ body {
   height: 50px;
 }
 .spinner .path {
-  stroke: #cccccc;
+  stroke: #797979;
   stroke-linecap: round;
   -webkit-animation: dash 1.5s ease-in-out infinite;
   animation: dash 1.5s ease-in-out infinite;
