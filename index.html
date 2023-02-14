@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="icon" type="image/x-icon" href="./images/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="images/favicon.svg" />
     <title>Domino's Stats</title>
     <meta name="title" content="Domino's Stats" />
     <meta name="description" content="Domino's Store Tracker" />
@@ -14,14 +14,14 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://jostasik.com/dominos/" />
     <meta property="og:title" content="Domino's Store Tracker" />
-    <meta property="og:image" content="./images/page-view.png" />
-    <link rel="stylesheet" href="css/dominos.css" />
+    <meta property="og:image" content="images/page-view.png" />
+    <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.79.0/L.Control.Locate.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.9/leaflet-search.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tomik23/autocomplete@1.8.6/dist/css/autocomplete.min.css" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BWQDGE068"></script>
     <script>
       window.dataLayer = window.dataLayer || []
@@ -48,11 +48,12 @@
           $("#loading").addClass("hide")
         })
     </script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.79.0/L.Control.Locate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.9/leaflet-search.min.js"></script>
-    <script defer src="js/js.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/tomik23/autocomplete@1.8.6/dist/js/autocomplete.min.js"></script>
+    <script src="data/stores.js"></script>
+    <script src="js/map.js"></script>
+    <script defer src="js/markers.js"></script>
   </body>
 </html>

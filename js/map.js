@@ -1,4 +1,4 @@
-var map = L.map("map", {center: [40.5, -86.5], zoom: 4, minZoom: 4, maxZoom: 16, preferCanvas: true, worldCopyJump: true})
+var map = L.map("map", {center: [39.9, -78.5], zoom: 5, minZoom: 4, maxZoom: 16, preferCanvas: true, worldCopyJump: true})
 
 var baseMaps = {
   Light: L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {attribution: "&copy; OpenStreetMap"}).addTo(map),
