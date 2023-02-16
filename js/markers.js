@@ -1,12 +1,12 @@
 const url = "https://api.jostasik.com/api/profile?storeId="
 
 storeData.forEach(function (id) {
-  var popupContent = `Domino's <b>${id.a}</b><br>Franchisee: ${id.e}<br>`
+  var popupContent = `<div style='text-align:center;font-size:16px'>Domino's <b>${id.a}</b></div>Franchisee: <b>${id.e}</b>`
   var marker = L.marker([id.b, id.c], {opacity: 1, icon: storeIcon}).bindPopup(popupContent)
   marker.on("click", function (e) {
     var popup = e.target.getPopup()
     $.getJSON(url + id.a).done(function (api) {
-      var liveDetails = `<span style='right'><i>City: ${api.City}, ${api.Region}<br>Phone: ${api.Phone}<hr>
+      var liveDetails = `City: ${api.City}, ${api.Region}<br>Phone: ${api.Phone}<hr>
                           Open: <span style='text-transform:capitalize'><b>${api.IsOpen}</b><br>
                           Deliveries: <b>${api.ServiceMethodEstimatedWaitMinutes.Delivery.Min}-${api.ServiceMethodEstimatedWaitMinutes.Delivery.Max}</b> mins<br>
                           Carryouts: <b>${api.ServiceMethodEstimatedWaitMinutes.Carryout.Min}-${api.ServiceMethodEstimatedWaitMinutes.Carryout.Max}</b> mins<br>
